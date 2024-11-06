@@ -1,5 +1,8 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from . import models
+
+CustomUser=get_user_model()
 
 
 class BlogForm(forms.ModelForm):
@@ -16,3 +19,8 @@ class BlogForm(forms.ModelForm):
 
 class DeleteBlogForm(forms.Form):
     delete_blog=forms.BooleanField(widget=forms.HiddenInput, initial=True)
+
+class FollowUsersForm(forms.ModelForm):
+    class Meta:
+        model=CustomUser
+        fields=['follows']
