@@ -7,7 +7,6 @@ class Blog(models.Model):
     title = models.CharField(max_length=128)
     content = models.CharField(max_length=5000)
     image = models.ImageField(blank=True, null=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     contributors=models.ManyToManyField(settings.AUTH_USER_MODEL, through='BlogContributor', related_name='contributions')
     date_created = models.DateTimeField(auto_now_add=True)
     starred = models.BooleanField(default=False)

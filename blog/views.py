@@ -6,7 +6,7 @@ from . import models
 
 @login_required
 def home(request):
-    blogs = models.Blog.objects.filter(author=request.user)
+    blogs = models.Blog.objects.filter(contributors=request.user)
     return render(request, 'blog/home.html', context={'blogs':blogs})
 
 @login_required
@@ -16,7 +16,6 @@ def blog_and_photo_upload(request):
         blog_form = forms.BlogForm(request.POST,request.FILES)
         if blog_form.is_valid():
             blog = blog_form.save(commit=False)
-            blog.author = request.user
             blog.save()
             blog.contributors.add(request.user, through_defaults={'contribution':'Auteur principal'})
             return redirect('home')
