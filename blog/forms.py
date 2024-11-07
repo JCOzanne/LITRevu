@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from . import models
 
 CustomUser=get_user_model()
@@ -24,3 +25,9 @@ class FollowUsersForm(forms.ModelForm):
     class Meta:
         model=CustomUser
         fields=['follows']
+
+    def clean_follows(self):
+        follows = self.cleaned_data['follows']
+        if self.instance in follows.all():
+            raise ValidationError("Vous ne pouvez pas vous suivre vous-même.")
+        return follows

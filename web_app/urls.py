@@ -31,6 +31,8 @@ urlpatterns = [
     path('blog/<int:blog_id>', blog.views.view_blog, name='view_blog'),
     path('blog/<int:blog_id>/edit', blog.views.edit_blog, name='edit_blog'),
     path('follow_users', blog.views.follow_users, name='follow_users'),
+    path('following/', blog.views.following_list, name='following_list'),
+    path('unfollow/<int:user_id>/', blog.views.unfollow_user, name='unfollow_user'),
 ]
 if settings.DEBUG:
     urlpatterns += static(

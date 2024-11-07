@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from . import forms
 from . import models
+from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
 
 @login_required
 def home(request):
@@ -60,3 +63,15 @@ def follow_users(request):
             form.save()
             return redirect('home')
     return render(request, 'blog/follow_users_form.html', context={'form':form})
+
+@login_required
+def following_list(request):
+    user = request.user
+    followed_users = user.follows.all()
+    return render(request, 'blog/following_list.html', {'followed_users': followed_users})
+
+@login_required
+def unfollow_user(request, user_id):
+    user_to_unfollow = get_object_or_404(CustomUser, id=user_id)
+    request.user.follows.remove(user_to_unfollow)
+    return redirect('following_list')

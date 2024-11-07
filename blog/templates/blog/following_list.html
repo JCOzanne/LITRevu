@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Utilisateurs que vous suivez</h2>
+    <ul>
+        {% for followed_user in followed_users %}
+            <li>
+                {{ followed_user.username }}
+                <a href="{% url 'unfollow_user' followed_user.id %}">Ne plus suivre</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
